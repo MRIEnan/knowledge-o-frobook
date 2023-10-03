@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const { FontFamilyIcon } = require("@radix-ui/react-icons");
+// const { FontFamilyIcon } = require("@radix-ui/react-icons");
 
 // eslint-disable-next-line no-undef
 module.exports = {
@@ -56,7 +56,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...FontFamilyIcon.sans],
+        // sans: ["var(--font-sans)", ...FontFamilyIcon.sans],
       },
       keyframes: {
         "accordion-down": {
@@ -72,7 +72,32 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      boxShadow: {
+        "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
+      },
+      aspectRatio: {
+        "4/3": "4 / 3",
+      },
+      fontWeight: {
+        thin: "100",
+        hairline: "100",
+        extralight: "200",
+        lightBold: "300",
+        normalBold: "400",
+        mediumBold: "500",
+        semibold: "600",
+        bold: "700",
+        extrabold: "800",
+        black: "900",
+      },
+      screens: {
+        // xl: { min: "1023px" },
+        // lg: { min: "767px", max: "1023px" },
+        // md: { min: "500px", max: "767px" },
+        // sm: { min: "0px", max: "500px" },
+      },
     },
   },
+  // eslint-disable-next-line no-undef
   plugins: [require("tailwindcss-animate")],
 };

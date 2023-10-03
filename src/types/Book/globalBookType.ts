@@ -1,6 +1,7 @@
 export type IBook = {
   _id: string;
   user_id: string;
+  imageLink: string;
   title: string;
   description: string;
   author: string;
