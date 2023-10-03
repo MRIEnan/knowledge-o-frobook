@@ -10,7 +10,9 @@ const TitlePrimary: FunctionComponent<ITitlePrimaryProps> = ({
   classes,
 }) => {
   return (
-    <div className={`text-5xl font-extrabold text-center m-0 p-4  ${classes}`}>
+    <div
+      className={`text-5xl font-extrabold text-center m-0 p-4 underline  decoration-zinc-300 underline-offset-8 ${classes}`}
+    >
       <span className="bg-clip-text text-transparent bg-gradient-to-l from-red-500 to-orange-500">
         {text}
       </span>
