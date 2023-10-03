@@ -1,11 +1,10 @@
 import "./App.css";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   return (
     <div>
-      <h1 className="text-red-800 bg-blue-600 inline-block  text-5xl font-bold underline ">
-        hello
-      </h1>
+      <MainLayout />
     </div>
   );
 }
