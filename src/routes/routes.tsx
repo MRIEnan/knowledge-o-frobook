@@ -29,15 +29,15 @@ const routes = createBrowserRouter([
         path: "/books/edit-books/:id",
         element: <EditBook />,
       },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
   },
   {
     path: "*",

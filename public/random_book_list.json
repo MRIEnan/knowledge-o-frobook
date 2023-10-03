@@ -1,0 +1,218 @@
+[
+  {
+    "_id": "1",
+    "user_id": "user1",
+    "title": "Book 1",
+    "description": "An exciting adventure awaits in this thrilling novel.",
+    "author": "Author 1",
+    "publicationDate": "2022-03-10",
+    "genre": "Adventure",
+    "createdAt": "2022-03-01",
+    "reviews": [
+      {
+        "userId": "reviewer1",
+        "review": "A gripping story with fantastic characters.",
+        "rating": 4.5,
+        "createdAt": "2022-03-05"
+      }
+    ]
+  },
+  {
+    "_id": "2",
+    "user_id": "user2",
+    "title": "Book 2",
+    "description": "A heartwarming tale of love and friendship.",
+    "author": "Author 2",
+    "publicationDate": "2021-12-20",
+    "genre": "Romance",
+    "createdAt": "2021-12-01",
+    "reviews": [
+      {
+        "userId": "reviewer2",
+        "review": "Beautifully written, a must-read for romantics.",
+        "rating": 4.8,
+        "createdAt": "2021-12-10"
+      }
+    ]
+  },
+  {
+    "_id": "3",
+    "user_id": "user3",
+    "title": "Book 3",
+    "description": "Unravel the mystery in this suspenseful thriller.",
+    "author": "Author 3",
+    "publicationDate": "2022-02-15",
+    "genre": "Mystery",
+    "createdAt": "2022-02-01",
+    "reviews": [
+      {
+        "userId": "reviewer3",
+        "review": "Kept me on the edge of my seat throughout.",
+        "rating": 4.7,
+        "createdAt": "2022-02-10"
+      }
+    ]
+  },
+  {
+    "_id": "4",
+    "user_id": "user4",
+    "title": "Book 4",
+    "description": "A thought-provoking journey through a dystopian world.",
+    "author": "Author 4",
+    "publicationDate": "2022-01-05",
+    "genre": "Dystopian",
+    "createdAt": "2022-01-01",
+    "reviews": [
+      {
+        "userId": "reviewer4",
+        "review": "An eye-opener, a must-read for sci-fi enthusiasts.",
+        "rating": 4.6,
+        "createdAt": "2022-01-10"
+      }
+    ]
+  },
+  {
+    "_id": "5",
+    "user_id": "user5",
+    "title": "Book 5",
+    "description": "A historical epic set in ancient civilizations.",
+    "author": "Author 5",
+    "publicationDate": "2021-11-15",
+    "genre": "Historical Fiction",
+    "createdAt": "2021-11-01",
+    "reviews": [
+      {
+        "userId": "reviewer5",
+        "review": "Rich in historical detail, a captivating journey.",
+        "rating": 4.4,
+        "createdAt": "2021-11-10"
+      }
+    ]
+  },
+  {
+    "_id": "6",
+    "user_id": "user6",
+    "title": "Book 6",
+    "description": "A sci-fi odyssey exploring the mysteries of the cosmos.",
+    "author": "Author 6",
+    "publicationDate": "2022-04-25",
+    "genre": "Science Fiction",
+    "createdAt": "2022-04-01",
+    "reviews": [
+      {
+        "userId": "reviewer6",
+        "review": "Mind-bending and thought-provoking sci-fi at its best.",
+        "rating": 4.9,
+        "createdAt": "2022-04-10"
+      }
+    ]
+  },
+  {
+    "_id": "7",
+    "user_id": "user7",
+    "title": "Book 7",
+    "description": "A heartwrenching tale of love and loss in wartime.",
+    "author": "Author 7",
+    "publicationDate": "2022-06-10",
+    "genre": "Historical Romance",
+    "createdAt": "2022-06-01",
+    "reviews": [
+      {
+        "userId": "reviewer7",
+        "review": "Tugged at my heartstrings, beautifully written.",
+        "rating": 4.7,
+        "createdAt": "2022-06-15"
+      }
+    ]
+  },
+  {
+    "_id": "8",
+    "user_id": "user8",
+    "title": "Book 8",
+    "description": "A thrilling legal drama with unexpected courtroom twists.",
+    "author": "Author 8",
+    "publicationDate": "2022-03-01",
+    "genre": "Legal Thriller",
+    "createdAt": "2022-02-15",
+    "reviews": [
+      {
+        "userId": "reviewer8",
+        "review": "Suspenseful and brilliantly written. A must-read for legal thriller fans.",
+        "rating": 4.8,
+        "createdAt": "2022-02-20"
+      }
+    ]
+  },
+  {
+    "_id": "9",
+    "user_id": "user9",
+    "title": "Book 9",
+    "description": "An intriguing mystery set in a small, enigmatic town.",
+    "author": "Author 9",
+    "publicationDate": "2022-07-20",
+    "genre": "Mystery",
+    "createdAt": "2022-07-01",
+    "reviews": [
+      {
+        "userId": "reviewer9",
+        "review": "Twists and turns at every corner, a true page-turner.",
+        "rating": 4.7,
+        "createdAt": "2022-07-10"
+      }
+    ]
+  },
+  {
+    "_id": "10",
+    "user_id": "user10",
+    "title": "Book 10",
+    "description": "A psychological thriller that will keep you up at night.",
+    "author": "Author 10",
+    "publicationDate": "2022-09-05",
+    "genre": "Thriller",
+    "createdAt": "2022-09-01",
+    "reviews": [
+      {
+        "userId": "reviewer10",
+        "review": "Mind games and suspense at its finest.",
+        "rating": 4.9,
+        "createdAt": "2022-09-15"
+      }
+    ]
+  },
+  {
+    "_id": "11",
+    "user_id": "user11",
+    "title": "Book 11",
+    "description": "A gripping mystery of secrets and hidden agendas.",
+    "author": "Author 11",
+    "publicationDate": "2022-08-10",
+    "genre": "Mystery",
+    "createdAt": "2022-08-01",
+    "reviews": [
+      {
+        "userId": "reviewer11",
+        "review": "Couldn't stop reading, a must-read for mystery lovers.",
+        "rating": 4.8,
+        "createdAt": "2022-08-15"
+      }
+    ]
+  },
+  {
+    "_id": "12",
+    "user_id": "user12",
+    "title": "Book 12",
+    "description": "A family drama filled with secrets, love, and betrayal.",
+    "author": "Author 12",
+    "publicationDate": "2022-10-15",
+    "genre": "Family Drama",
+    "createdAt": "2022-10-01",
+    "reviews": [
+      {
+        "userId": "reviewer12",
+        "review": "Emotional rollercoaster, a captivating family saga.",
+        "rating": 4.6,
+        "createdAt": "2022-10-10"
+      }
+    ]
+  }
+]

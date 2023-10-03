@@ -1,7 +1,12 @@
 import React from "react";
+import HeaderCom from "../components/HeaderCom";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <HeaderCom />
+    </div>
+  );
 };
 
 export default Home;
