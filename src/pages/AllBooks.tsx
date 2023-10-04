@@ -1,6 +1,7 @@
 import { Search } from "@/components/Search";
 import CardOne from "@/components/shared/CardOne";
 import TitlePrimary from "@/components/shared/TitlePrimary";
+import Pulse from "@/components/tailwindComponents/Pulse";
 import { IBook } from "@/types/Book/globalBookType";
 import React, { useEffect, useState } from "react";
 
@@ -14,6 +15,16 @@ const AllBooks = () => {
         setAllBooks(data);
       });
   }, []);
+  if (!allBooks) {
+    return (
+      <div className="flex flex-wrap justify-center ">
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(() => (
+          <Pulse />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div>
       <TitlePrimary text={String("All Books")} />

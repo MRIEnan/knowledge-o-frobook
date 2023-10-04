@@ -15,6 +15,9 @@ module.exports = {
       },
     },
     extend: {
+      width: {
+        btnSizeOne: "calc(100% - 30px)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

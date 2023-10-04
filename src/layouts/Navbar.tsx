@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Books", href: "/books", current: false },
-  { name: "Dashboard", href: "/", current: false },
+  { name: "Add Book", href: "/book/add-book", current: false },
 ];
 
 function classNames(...classes: string[]) {
@@ -153,7 +153,7 @@ export default function Example() {
                           <a
                             href="#"
                             className={classNames(
-                              active ? "bg-gray-100" : "",
+                              active ? "bg-red-600 text-white" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >

@@ -5,25 +5,6 @@ import { Button } from "../ui/button";
 import { RectangleStackIcon, UserIcon } from "@heroicons/react/24/outline";
 import { Badge } from "../ui/badge";
 
-// {
-//     "_id": "12",
-//     "user_id": "user12",
-//     "title": "Book 12",
-//     "description": "A family drama filled with secrets, love, and betrayal.",
-//     "author": "Author 12",
-//     "publicationDate": "2022-10-15",
-//     "genre": "Family Drama",
-//     "createdAt": "2022-10-01",
-//     "reviews": [
-//       {
-//         "userId": "reviewer12",
-//         "review": "Emotional rollercoaster, a captivating family saga.",
-//         "rating": 4.6,
-//         "createdAt": "2022-10-10"
-//       }
-//     ]
-//   }
-
 const CardOne = ({ id }: { id?: string }) => {
   const [cardInfo, setCardInfo] = useState<IBook | null>(null);
 
@@ -41,8 +22,8 @@ const CardOne = ({ id }: { id?: string }) => {
   return (
     <Link
       to={`/book/${cardInfo._id}`}
-      className="border-[3px] p-[10px] m-[5px] rounded-lg border-slate-100 xl:w-80   lg:w-80  md:w-80  sm:w-full mx-[10px] my-[10px] relative shadow-1xl hover:shadow-2xl  hover:scale-105 hover:border-orange-400 duration:200 duration:300
-    transition shadow-inner cursor-pointer inline-block"
+      className="border-[3px] p-[10px] m-[5px] rounded-lg border-slate-100 xl:w-80   lg:w-80  md:w-80  sm:w-full mx-[10px] my-[10px] relative shadow-1xl hover:shadow-2xl  md:hover:scale-105 hover:border-orange-400 duration:200 duration:300
+    transition shadow-inner cursor-pointer inline-block z-0"
     >
       <div className="inline-block w-full h-full absolute bg-grey-100 top-0 left-0 z-10 opacity-20  blur-sm "></div>
       <div className="z-20 relative">
@@ -50,7 +31,7 @@ const CardOne = ({ id }: { id?: string }) => {
           {/* <div className="text-1xl text-slate-800">
             {cardInfo.genre.substring(0, 15)}
           </div> */}
-          <Badge variant="enVar">{cardInfo.genre.substring(0, 15)}</Badge>
+          <Badge variant="enVar">{cardInfo.genre.substring(0, 20)}</Badge>
           <div className="h-full text-slate-800 flex justify-between align-baseline relative">
             <div className="text-[10px] h-[15px] font-semibold">
               Published :{" "}
@@ -85,9 +66,9 @@ const CardOne = ({ id }: { id?: string }) => {
           </div>
         </div>
         <div>
-          <Button variant={"enOutline"}>
-            <Link to={`/book/${cardInfo._id}`}>Read more</Link>
-          </Button>
+          <Button variant={"enOutline"}>Read more</Button>
+          {/* <Link to={`/book/${cardInfo._id}`}>
+          </Link> */}
         </div>
       </div>
     </Link>

@@ -15,7 +15,7 @@ const buttonVariants = cva(
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         enOutline:
-          "w-full border border-input bg-slate-800 text-white hover:bg-orange-600 hover:text-accent-foreground",
+          "relative w-btnSizeOne border border-input bg-slate-800 text-white hover:bg-orange-600 hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
