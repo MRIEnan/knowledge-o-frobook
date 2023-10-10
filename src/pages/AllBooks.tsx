@@ -4,7 +4,7 @@ import TitlePrimary from "@/components/shared/TitlePrimary";
 import Paginate from "@/components/shared/paginate/Paginate";
 import { useGetBooksQuery } from "@/redux/features/book/bookApi";
 import { IBook } from "@/types/Book/globalBookType";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const addStrings = (refString: string = "", val: string = "") => {
   return refString + val + "&";
@@ -51,7 +51,12 @@ const AllBooks = () => {
     limit: pageLimit,
     sortBy: "createdAt",
     sortOrder: "desc",
+    searchTerm: searchValue,
   });
+
+  useEffect(() => {
+    console.log(searchValue);
+  }, [searchValue]);
 
   const { data: allBooks } = useGetBooksQuery(`?${qParams}`, {
     refetchOnMountOrArgChange: true,

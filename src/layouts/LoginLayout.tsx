@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import particlesConfig from "@/components/particles/particles-config";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import Particles from "react-particles";
 import type { Engine } from "tsparticles-engine";
 import { loadFull } from "tsparticles";

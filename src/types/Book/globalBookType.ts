@@ -20,7 +20,29 @@ export type IUser = {
 };
 export type IBook = {
   _id: string;
-  accessIds: string | IUser;
+  accessIds: {
+    _id: string;
+    id?: string;
+    email: string;
+    userName: string;
+    role: string;
+    createdAt?: string;
+    updatedAt?: string;
+    needsPasswordChange?: true | false;
+    passwordChangedAt?: Date;
+  };
+  imageLink: string;
+  title: string;
+  description: string;
+  author: string[];
+  publicationDate: string;
+  genre: string;
+  createdAt: string;
+  modifiedAt: string;
+};
+export type IBookString = {
+  _id: string;
+  accessIds: string;
   imageLink: string;
   title: string;
   description: string;
@@ -71,10 +93,36 @@ export type IApiResponse<T> = {
 };
 
 export type IWishlist = {
-  _id?: string;
-  userId?: string | unknown;
-  bookId?: string | unknown;
-  status?: string;
+  _id: string;
+  userId: {
+    _id: string;
+    id?: string;
+    email: string;
+    userName: string;
+    role: string;
+    createdAt?: string;
+    updatedAt?: string;
+    needsPasswordChange?: true | false;
+    passwordChangedAt?: Date;
+  };
+  bookId: {
+    _id: string;
+    accessIds: string | IUser;
+    imageLink: string;
+    title: string;
+    description: string;
+    author: string[];
+    publicationDate: string;
+    genre: string;
+    createdAt: string;
+    modifiedAt: string;
+  };
+  status: string;
   createdAt?: string;
   updatedAt?: string;
+};
+
+export type ILoginResponse = {
+  accessToken: string;
+  needsPasswordChange: string;
 };

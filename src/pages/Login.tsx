@@ -7,12 +7,13 @@ import {
   IApiResponse,
   IUser,
   IErrorResponse,
+  ILoginResponse,
 } from "@/types/Book/globalBookType";
-import { getCookie } from "@/utils/getCookie";
 import { setUserInfo } from "@/redux/features/user/userSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { setCookie } from "@/utils/getCookie";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -28,9 +29,13 @@ const Login: React.FC = () => {
     dispatch(setUserInfo(data));
   };
 
-  const handleSuccess = (data: IApiResponse<string[]>) => {
-    const myAuth = getCookie("accessToken");
+  const handleSuccess = (data: IApiResponse<ILoginResponse>) => {
+    if (!data || !data.data) {
+      return;
+    }
+    const myAuth = data.data.accessToken;
     if (myAuth) {
+      setCookie("accessToken", myAuth, 5);
       const options = { authorization: myAuth };
 
       getProfile(options)
@@ -40,17 +45,17 @@ const Login: React.FC = () => {
             handleError(Object.entries(data)[0][1]["data"]);
           } else {
             handleSetUserData(Object.entries(data)[0][1]["data"]);
+            toast({
+              duration: 3000,
+              description: Object.entries(data)[0][1]["message"],
+              title: "Login Info",
+            });
           }
         })
         .catch((error) => {
           handleError(error);
         });
     }
-    toast({
-      duration: 3000,
-      description: data.message,
-      title: "Login Info",
-    });
     // dispatch(setUserInfo(data.data!));
   };
 

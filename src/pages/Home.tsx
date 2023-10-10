@@ -1,4 +1,3 @@
-import React from "react";
 import HeaderCom from "../components/HeaderCom";
 import TopTenbook from "../components/TopTenbook";
 

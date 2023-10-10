@@ -5,13 +5,12 @@ import {
   useGetSingleBookQuery,
 } from "@/redux/features/book/bookApi";
 import { useAppSelector } from "@/redux/hooks";
-import { IBook } from "@/types/Book/globalBookType";
+import { IBookString } from "@/types/Book/globalBookType";
 import { getCookie } from "@/utils/getCookie";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const initialBookState: Partial<IBook> = {
-  accessIds: "",
+const initialBookState: Partial<IBookString> = {
   imageLink: "",
   title: "",
   description: "",
@@ -20,7 +19,8 @@ const initialBookState: Partial<IBook> = {
 };
 
 const EditBook: React.FC = () => {
-  const [newBook, setNewBook] = useState<Partial<IBook>>(initialBookState);
+  const [newBook, setNewBook] =
+    useState<Partial<IBookString>>(initialBookState);
 
   const { id } = useParams();
   const [authors, setAuthors] = useState<string>("");

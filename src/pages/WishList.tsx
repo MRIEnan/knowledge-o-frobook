@@ -1,20 +1,12 @@
 import WishCard from "@/components/WishCard";
 import Paginate from "@/components/shared/paginate/Paginate";
 import { useGetWishlistQuery } from "@/redux/features/wishlist/wishlistApi";
-import { useAppSelector } from "@/redux/hooks";
 import { IWishlist } from "@/types/Book/globalBookType";
 import { getCookie } from "@/utils/getCookie";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  status: "Reading" | "Completed" | "GoingToRead";
-}
-
-interface IWishList {
+interface IWishListProps {
   isWishListOpen?: boolean;
   setIsWishListOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -44,80 +36,13 @@ const generateQueryParams = (args: {
   return myQ.substring(0, myQ.length - 1);
 };
 
-const Wishlist: React.FC<IWishList> = ({
+const Wishlist: React.FC<IWishListProps> = ({
   isWishListOpen,
   setIsWishListOpen,
 }) => {
-  const [wishes, setWishes] = useState<Book[]>([
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-    {
-      id: "afdasdf",
-      title: "Book 1",
-      author: "Author 1",
-      status: "Reading",
-    },
-  ]);
+  const [wishes, setWishes] = useState<IWishlist[]>([]);
 
-  const [totalPage, setTotalPage] = useState<number>(4);
+  const [totalPage, setTotalPage] = useState<number>(0);
   const [currentPageNo, setCurrentPageNo] = useState<number>(1);
   const myLimit = 5;
 
@@ -133,6 +58,7 @@ const Wishlist: React.FC<IWishList> = ({
     authorization: myAuth,
     queryParams: `${queryParams}`,
   };
+
   const { data: getWishlist, isSuccess } = useGetWishlistQuery(getWishlistObj, {
     refetchOnMountOrArgChange: true,
   });
@@ -154,14 +80,6 @@ const Wishlist: React.FC<IWishList> = ({
     }
   };
 
-  //   const handleStatusChange = (bookId: number, newStatus: Book["status"]) => {
-  //     setBooks((prevBooks) =>
-  //       prevBooks.map((book) =>
-  //         book.id === bookId ? { ...book, status: newStatus } : book
-  //       )
-  //     );
-  //   };
-
   return (
     <div className="relative">
       {/* <button
@@ -182,7 +100,7 @@ const Wishlist: React.FC<IWishList> = ({
               </div>
             </div>
             <ul className="fixed relative top-[40px] h-wishList overflow-y-scroll py-[20px]">
-              {wishes.map((wish: IWishlist) => (
+              {wishes.map((wish) => (
                 <WishCard key={wish._id} wish={wish} />
               ))}
             </ul>

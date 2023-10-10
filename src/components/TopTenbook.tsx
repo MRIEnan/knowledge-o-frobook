@@ -8,7 +8,10 @@ const TopTenbook = () => {
   const [allBooks, setAllBooks] = useState<IBook[] | null>(null);
 
   const { data: myBooks, isSuccess } = useGetBooksQuery(
-    `?limit=10&page=1&sortOrder=desc`
+    `?limit=10&page=1&sortOrder=desc`,
+    {
+      refetchOnMountOrArgChange: true,
+    }
   );
   useEffect(() => {
     if (isSuccess) {
@@ -16,7 +19,7 @@ const TopTenbook = () => {
         setAllBooks(myBooks.data);
       }
     }
-  }, [isSuccess, myBooks]);
+  }, [isSuccess, myBooks, allBooks]);
 
   if (!allBooks) {
     return;

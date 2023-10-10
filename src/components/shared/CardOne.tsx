@@ -1,5 +1,5 @@
 import { IBook } from "@/types/Book/globalBookType";
-import React, { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { PlusCircleIcon, UserIcon } from "@heroicons/react/24/outline";
@@ -48,6 +48,11 @@ const CardOne = ({
     e.stopPropagation();
     const myAuth = getCookie("accessToken");
     if (!book._id || !myAuth) {
+      handleToast({
+        title: "Access denied",
+        description: "Please login to add to wishlist",
+        duration: 3000,
+      });
       return;
     }
     const options = {

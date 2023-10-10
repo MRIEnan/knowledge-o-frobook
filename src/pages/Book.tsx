@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const Book = () => {
-  const [book, setBook] = useState<IBook>({});
+  const [book, setBook] = useState<IBook>();
   const { id } = useParams();
   const navigate = useNavigate();
   const { _id: userId } = useAppSelector((state) => state.user);
@@ -38,7 +38,6 @@ export const Book = () => {
           }
         }
       } else {
-        setBook({});
         setAccessId("");
       }
     }

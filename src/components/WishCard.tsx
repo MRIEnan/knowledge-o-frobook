@@ -11,11 +11,10 @@ import {
   TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const WishCard = ({ wish }: { wish: IWishlist }) => {
-  console.log(wish);
   const [myStaticStatus, setMyStaticStatus] = useState<string>("");
   const [myStatus, setMyStatus] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);

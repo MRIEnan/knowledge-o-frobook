@@ -31,6 +31,7 @@ const bookSlice = createSlice({
   reducers: {
     setBookInfo: (state, action: PayloadAction<IBook>) => {
       state = action.payload;
+      return { ...state };
     },
   },
 });

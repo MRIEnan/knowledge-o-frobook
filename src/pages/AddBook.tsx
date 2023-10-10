@@ -3,12 +3,12 @@ import ModalOne from "@/components/shared/ModalOne";
 import { toast } from "@/components/ui/use-toast";
 import { useAddBookMutation } from "@/redux/features/book/bookApi";
 import { useAppSelector } from "@/redux/hooks";
-import { IBook } from "@/types/Book/globalBookType";
+import { IBookString } from "@/types/Book/globalBookType";
 import { getCookie } from "@/utils/getCookie";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const initialBookState: Partial<IBook> = {
+const initialBookState: Partial<IBookString> = {
   accessIds: "",
   imageLink: "",
   title: "",
@@ -18,7 +18,8 @@ const initialBookState: Partial<IBook> = {
 };
 
 const AddBook: React.FC = () => {
-  const [newBook, setNewBook] = useState<Partial<IBook>>(initialBookState);
+  const [newBook, setNewBook] =
+    useState<Partial<IBookString>>(initialBookState);
 
   const [authors, setAuthors] = useState<string>("");
   const { _id: uId } = useAppSelector((state) => state.user);

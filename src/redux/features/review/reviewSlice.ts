@@ -1,6 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IUser } from "@/types/Book/globalBookType";
 import { createSlice } from "@reduxjs/toolkit";
 // import { createSlice } from "@reduxjs/toolkit";
 

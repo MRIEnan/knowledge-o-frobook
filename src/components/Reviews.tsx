@@ -1,5 +1,5 @@
 import { IReview } from "@/types/Book/globalBookType";
-import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import IsLoading from "./shared/IsLoading";
 import Paginate from "./shared/paginate/Paginate";
 import {

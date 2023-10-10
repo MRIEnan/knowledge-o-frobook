@@ -1,5 +1,8 @@
 import { toast } from "@/components/ui/use-toast";
-import { useCreateUserMutation } from "@/redux/features/user/userApi";
+import {
+  useCreateUserMutation,
+  useLoginUserMutation,
+} from "@/redux/features/user/userApi";
 import { setUserInfo } from "@/redux/features/user/userSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import {
@@ -7,6 +10,7 @@ import {
   IErrorResponse,
   IUser,
 } from "@/types/Book/globalBookType";
+import { setCookie } from "@/utils/getCookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -19,13 +23,35 @@ const SignUp: React.FC = () => {
 
   const [createUser, { isLoading }] = useCreateUserMutation();
 
-  const handleSuccess = (data: IApiResponse<IUser>) => {
-    toast({
-      duration: 3000,
-      description: data.message,
-      title: "User Created",
-    });
-    dispatch(setUserInfo(data.data!));
+  const [loginUser] = useLoginUserMutation();
+
+  const handleSuccess = (signInData: IApiResponse<IUser>) => {
+    const myObj = {
+      email: email,
+      password: password,
+    };
+    const options = {
+      data: myObj,
+    };
+
+    loginUser(options)
+      .then((data) => {
+        const dataType = Object.keys(data)[0];
+        if (dataType === "error") {
+          // do nothing for now
+        } else {
+          const logData = Object.entries(data)[0][1]["data"]["accessToken"];
+          setCookie("accessToken", logData, 5);
+          dispatch(setUserInfo(signInData.data!));
+        }
+      })
+      .then(() => {
+        toast({
+          duration: 3000,
+          description: signInData.message,
+          title: "User Created",
+        });
+      });
   };
   const handleError = (error: IErrorResponse) => {
     toast({
