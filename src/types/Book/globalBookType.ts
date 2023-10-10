@@ -1,22 +1,34 @@
+export type IReview = {
+  _id?: string;
+  bookId: string;
+  userId: IUser;
+  review: string;
+  rating: number;
+  createdAt: string;
+};
+
+export type IUser = {
+  _id?: string;
+  id?: string;
+  email: string;
+  userName: string;
+  role: string;
+  createdAt?: string;
+  updatedAt?: string;
+  needsPasswordChange?: true | false;
+  passwordChangedAt?: Date;
+};
 export type IBook = {
   _id: string;
-  user_id: string;
+  accessIds: string | IUser;
   imageLink: string;
   title: string;
   description: string;
-  author: string;
+  author: string[];
   publicationDate: string;
-  creatingTime: Date;
   genre: string;
   createdAt: string;
-  reviews: [
-    {
-      userId: string;
-      review: string;
-      rating: number;
-      createdAt: Date;
-    }
-  ];
+  modifiedAt: string;
 };
 
 export type IBookSingleImage = {
@@ -28,4 +40,41 @@ export type IGetBookImageResponse = {
   success: boolean;
   message: string;
   data: IBookSingleImage | null;
+};
+
+export type IErrorMessage = {
+  path: string;
+  message: string;
+};
+
+export type IErrorMessages = {
+  errorMessages: IErrorMessage[];
+};
+
+export type IErrorResponse = {
+  success: boolean;
+  stack?: string;
+  errorMessages?: IErrorMessages;
+  message: string;
+};
+
+export type IApiResponse<T> = {
+  statusCode: number;
+  success: boolean;
+  message?: string | null;
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+  data: T | null;
+};
+
+export type IWishlist = {
+  _id?: string;
+  userId?: string | unknown;
+  bookId?: string | unknown;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

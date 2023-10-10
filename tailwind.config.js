@@ -17,6 +17,19 @@ module.exports = {
     extend: {
       width: {
         btnSizeOne: "calc(100% - 30px)",
+        enW80: "calc(50% - 20px)",
+        enW40: {
+          sm: "calc(80% - 10px)",
+          md: "calc(40vw - 10px)",
+        },
+      },
+      height: {
+        enH80: "calc(50% - 10px)",
+        enH40: {
+          sm: "auto",
+          md: "calc(80vh - 10px)",
+        },
+        wishList: "calc(100vh - 110px)",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -77,6 +90,9 @@ module.exports = {
       },
       boxShadow: {
         "3xl": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
+        insetEnOne: "0 0px 1px 1px rgba(11, 11, 11, 0.05) inset",
+        insetEnTwo:
+          "0 0px 10px 2px rgba(11, 11, 11, 0.1),0 0px 2px 0px rgba(11, 11, 11, 0.1) inset",
       },
       aspectRatio: {
         "4/3": "4 / 3",

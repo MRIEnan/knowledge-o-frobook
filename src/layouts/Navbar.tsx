@@ -1,7 +1,15 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logOutUser } from "@/redux/features/user/userSlice";
+import { deleteCookie } from "@/utils/getCookie";
+import logo from "/knowlegeusOne.png";
+
+interface INavbarProps {
+  setIsWishListOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -13,7 +21,24 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Example({ setIsWishListOpen }: INavbarProps) {
+  const { userName } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userName) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [userName]);
+
+  const handleLogOut = () => {
+    // todo: log out user
+    deleteCookie("accessToken");
+    dispatch(logOutUser());
+  };
   return (
     <Disclosure as="nav" className="relative bg-gray-800 z-10000">
       {({ open }) => (
@@ -35,11 +60,7 @@ export default function Example() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <Link to="/">
-                    <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
-                    />
+                    <img className="h-8 w-auto" src={logo} alt="knowledgeus" />
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -96,71 +117,88 @@ export default function Example() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Settings
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/login"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Login
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/signup"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            SignUp
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-red-600 text-white" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
-                          </a>
-                        )}
-                      </Menu.Item>
+                      {isOpen && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="#"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              {userName ? `${userName}` : `Your Profile`}
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {isOpen && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <div
+                              onClick={
+                                setIsWishListOpen
+                                  ? () => {
+                                      setIsWishListOpen(true);
+                                    }
+                                  : () => {}
+                              }
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                              )}
+                            >
+                              Wishlist
+                            </div>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {!isOpen && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/login"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Login
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {!isOpen && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/signup"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              SignUp
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {isOpen && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              onClick={() => handleLogOut()}
+                              className={classNames(
+                                active ? "bg-red-600 text-white" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>

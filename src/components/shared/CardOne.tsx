@@ -1,27 +1,91 @@
 import { IBook } from "@/types/Book/globalBookType";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { MouseEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { RectangleStackIcon, UserIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon, UserIcon } from "@heroicons/react/24/outline";
 import { Badge } from "../ui/badge";
+import { useGetSingleBookQuery } from "@/redux/features/book/bookApi";
+import Pulse from "../tailwindComponents/Pulse";
+import { useCreateWishMutation } from "@/redux/features/wishlist/wishlistApi";
+import { getCookie } from "@/utils/getCookie";
+import { handleToast } from "@/utils/handleToast";
+// import Pulse from "../tailwindComponents/Pulse";
 
-const CardOne = ({ id }: { id?: string }) => {
+const CardOne = ({
+  id,
+  searchTerm = "",
+}: {
+  id?: string;
+  searchTerm?: string;
+}) => {
   const [cardInfo, setCardInfo] = useState<IBook | null>(null);
+  const { data: cardInfoData, isSuccess } = useGetSingleBookQuery(`${id}`);
+  const [createWish] = useCreateWishMutation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("./random_book_list.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const myData = data.find((item: IBook) => item._id === id);
-        setCardInfo(myData);
-      });
-  }, []);
-  if (!cardInfo) {
-    return <div>Loading</div>;
+    if (isSuccess) {
+      setCardInfo(cardInfoData.data);
+    }
+  }, [isSuccess, cardInfoData, searchTerm]);
+
+  if (
+    !cardInfo ||
+    (cardInfo &&
+      (!cardInfo.genre ||
+        !cardInfo.title ||
+        !cardInfo.description ||
+        !cardInfo.author ||
+        !cardInfo.genre))
+  ) {
+    return <Pulse />;
   }
+
+  const handleOnAddWishlist = (
+    e: MouseEvent<SVGSVGElement | MouseEvent | HTMLAnchorElement>,
+    book: IBook
+  ) => {
+    e.stopPropagation();
+    const myAuth = getCookie("accessToken");
+    if (!book._id || !myAuth) {
+      return;
+    }
+    const options = {
+      authorization: myAuth,
+      data: { bookId: book._id },
+    };
+
+    createWish(options).then((data) => {
+      const dataType = Object.keys(data)[0];
+      if (dataType === "error") {
+        const errorData = Object.entries(data)[0][1]["data"];
+        const toastData = {
+          title: "add Wishlist",
+          description: errorData.message,
+          duration: 3000,
+        };
+        handleToast(toastData);
+      } else {
+        const mData = Object.entries(data)[0][1];
+        const toastData = {
+          title: "add Wishlist",
+          description: mData.message,
+          duration: 3000,
+        };
+        handleToast(toastData);
+      }
+    });
+  };
+
+  const handleOnCardHolderClick = (cardId: string) => {
+    navigate(`/book/${cardId}`);
+  };
+
   return (
-    <Link
-      to={`/book/${cardInfo._id}`}
+    <div
+      onClick={() => {
+        handleOnCardHolderClick(cardInfo._id);
+      }}
       className="border-[3px] p-[10px] m-[5px] rounded-lg border-slate-100 xl:w-80   lg:w-80  md:w-80  sm:w-full mx-[10px] my-[10px] relative shadow-1xl hover:shadow-2xl  md:hover:scale-105 hover:border-orange-400 duration:200 duration:300
     transition shadow-inner cursor-pointer inline-block z-0"
     >
@@ -43,15 +107,23 @@ const CardOne = ({ id }: { id?: string }) => {
         </div>
         <div>
           <img
-            className="h-36 w-full object-cover object-center"
+            className="h-36 w-full object-cover object-center rounded-md"
             src={cardInfo.imageLink}
             alt=""
           />
         </div>
 
         <div>
-          <div className="text-ellipsis w-full text-justify text-black-600 font-bold  flex h-auto align-middle mt-2 mb-1">
-            <RectangleStackIcon className="inline mr-2 h-6" />
+          <div className="text-ellipsis w-full text-justify text-black-600 font-bold  flex h-auto align-middle mt-2 mb-1 relative">
+            <span className="absolute text-[6px] top-[-8px] left-[6px] text-orange-500">
+              Add To Wishlist
+            </span>
+            <PlusCircleIcon
+              onClick={(e) => {
+                handleOnAddWishlist(e, cardInfo);
+              }}
+              className="inline bg-orange-500 rounded-[50%] text-white mr-2 h-6 animate-spin hover:animate-pulse"
+            />
             {cardInfo.title.substring(0, 20)}
           </div>
           <div className=" h-20 w-full text-justify text-black-600">
@@ -60,9 +132,13 @@ const CardOne = ({ id }: { id?: string }) => {
             </p>
           </div>
           <div className="h-6 flex justify-left align-middle ">
-            <UserIcon className="h-[20px] mt-[2.5px] mr-[3.5px]" />
+            <UserIcon
+              title={`${cardInfo.author.join(", ")}`}
+              className="h-[20px] mt-[2.5px] mr-[3.5px]"
+            />
             {" author: "}
-            {cardInfo.author}
+            {cardInfo.author[0]}
+            {cardInfo.author.length > 1 ? "..." : ""}
           </div>
         </div>
         <div>
@@ -71,7 +147,7 @@ const CardOne = ({ id }: { id?: string }) => {
           </Link> */}
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

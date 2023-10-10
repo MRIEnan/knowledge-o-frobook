@@ -1,16 +1,87 @@
-import React, { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
+import { useCreateUserMutation } from "@/redux/features/user/userApi";
+import { setUserInfo } from "@/redux/features/user/userSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import {
+  IApiResponse,
+  IErrorResponse,
+  IUser,
+} from "@/types/Book/globalBookType";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [CheckPassword, setCheckPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const dispatch = useAppDispatch();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const [createUser, { isLoading }] = useCreateUserMutation();
+
+  const handleSuccess = (data: IApiResponse<IUser>) => {
+    toast({
+      duration: 3000,
+      description: data.message,
+      title: "User Created",
+    });
+    dispatch(setUserInfo(data.data!));
+  };
+  const handleError = (error: IErrorResponse) => {
+    toast({
+      duration: 3000,
+      description: error.message,
+      title: "Sign Up Failed",
+    });
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      toast({
+        duration: 5000,
+        description: "Please wait. Creating the user",
+        title: "Please wait",
+      });
+    }
+  }, [isLoading]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your signup logic here
-    console.log(`Email: ${email}, Password: ${password}`);
+
+    if (password !== confirmPassword) {
+      toast({
+        duration: 3000,
+        description: "password doesn't match",
+        title: "Invalid password",
+      });
+      return;
+    }
+    if (password.length < 6) {
+      toast({
+        duration: 3000,
+        description: "password can't be less than 6 characters",
+        title: "Invalid password",
+      });
+      return;
+    }
+    // todo: Add your signup logic here
+    const myObj = {
+      email: email,
+      userName: name,
+      password: password,
+    };
+    const options = {
+      data: myObj,
+    };
+
+    createUser(options).then((data) => {
+      const dataType = Object.keys(data)[0];
+      if (dataType === "error") {
+        handleError(Object.entries(data)[0][1]["data"]);
+      } else {
+        handleSuccess(Object.entries(data)[0][1]);
+      }
+    });
   };
 
   return (
@@ -54,12 +125,12 @@ const SignUp: React.FC = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold">
-              Check Password
+              Confirm Password
             </label>
             <input
               type="password"
-              value={CheckPassword}
-              onChange={(e) => setCheckPassword(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-navy-blue-500"
               required
             />

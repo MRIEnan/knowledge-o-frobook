@@ -1,34 +1,35 @@
-import { Link } from "react-router-dom";
-import { toast } from "./ui/use-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector } from "@/redux/hooks";
 
 export default function HeaderCom() {
+  const { _id: uId } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  const handleAddBook = () => {
+    navigate("/book/add-book");
+  };
   return (
     <div>
       <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-28 bg-grey-400 select-none">
-        <div>
-          <button
-            onClick={() => {
-              toast({
-                duration: 5000,
-                description: "Book added",
-                title: "Book name",
-              });
-            }}
-          >
-            hello
-          </button>
-        </div>
         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
           <div
             className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 duration:300
             transition hover:scale-105 hover:bg-gray-200 hover:text-slate-600 duration-300"
             title="Join to add books, along with wishlist, reading list etc."
+            onClick={() => {
+              handleAddBook();
+            }}
           >
-            Want to add books?.{" "}
-            <Link to="/login" className="font-semibold text-indigo-600">
-              <span className="absolute inset-0" aria-hidden="true" />
-              JOIN NOW<span aria-hidden="true">&rarr;</span>
-            </Link>
+            Want to add books?
+            <span>
+              {!uId && (
+                <span className="font-semibold text-indigo-600">
+                  <span className="absolute inset-0" aria-hidden="true" />
+                  {`. JOIN NOW`}
+                  <span aria-hidden="true">&rarr;</span>
+                </span>
+              )}
+            </span>
           </div>
         </div>
         <div className="text-center">

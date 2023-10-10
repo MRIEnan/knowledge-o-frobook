@@ -2,28 +2,32 @@ import { useEffect, useState } from "react";
 import CardOne from "./shared/CardOne";
 import TitlePrimary from "./shared/TitlePrimary";
 import { IBook } from "@/types/Book/globalBookType";
-import Pulse from "./tailwindComponents/Pulse";
+import { useGetBooksQuery } from "@/redux/features/book/bookApi";
 
 const TopTenbook = () => {
   const [allBooks, setAllBooks] = useState<IBook[] | null>(null);
 
+  const { data: myBooks, isSuccess } = useGetBooksQuery(
+    `?limit=10&page=1&sortOrder=desc`
+  );
   useEffect(() => {
-    fetch("./random_book_list.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setAllBooks(data.slice(0, 10));
-      });
-  }, []);
+    if (isSuccess) {
+      if (myBooks) {
+        setAllBooks(myBooks.data);
+      }
+    }
+  }, [isSuccess, myBooks]);
 
   if (!allBooks) {
+    return;
     // return <div>Loading...</div>;
-    return (
-      <div className="flex flex-wrap justify-center ">
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => (
-          <Pulse />
-        ))}
-      </div>
-    );
+    // return (
+    //   <div className="flex flex-wrap justify-center ">
+    //     {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => (
+    //       <Pulse />
+    //     ))}
+    //   </div>
+    // );
   }
 
   return (

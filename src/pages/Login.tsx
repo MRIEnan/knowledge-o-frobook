@@ -1,14 +1,97 @@
-import React, { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
+import {
+  useGetProfileMutation,
+  useLoginUserMutation,
+} from "@/redux/features/user/userApi";
+import {
+  IApiResponse,
+  IUser,
+  IErrorResponse,
+} from "@/types/Book/globalBookType";
+import { getCookie } from "@/utils/getCookie";
+import { setUserInfo } from "@/redux/features/user/userSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const dispatch = useAppDispatch();
+
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+
+  const [getProfile] = useGetProfileMutation();
+
+  const handleSetUserData = (data: IUser) => {
+    dispatch(setUserInfo(data));
+  };
+
+  const handleSuccess = (data: IApiResponse<string[]>) => {
+    const myAuth = getCookie("accessToken");
+    if (myAuth) {
+      const options = { authorization: myAuth };
+
+      getProfile(options)
+        .then((data) => {
+          const dataType = Object.keys(data)[0];
+          if (dataType === "error") {
+            handleError(Object.entries(data)[0][1]["data"]);
+          } else {
+            handleSetUserData(Object.entries(data)[0][1]["data"]);
+          }
+        })
+        .catch((error) => {
+          handleError(error);
+        });
+    }
+    toast({
+      duration: 3000,
+      description: data.message,
+      title: "Login Info",
+    });
+    // dispatch(setUserInfo(data.data!));
+  };
+
+  const handleError = (error: IErrorResponse) => {
+    toast({
+      duration: 3000,
+      description: error.message,
+      title: "Sign Up Failed",
+    });
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      toast({
+        duration: 2000,
+        description: "Please wait. login user",
+        title: "Please wait",
+      });
+    }
+  }, [isLoading]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log(`Email: ${email}, Password: ${password}`);
+
+    // todo: Add your login logic here
+    const myObj = {
+      email: email,
+      password: password,
+    };
+    const options = {
+      data: myObj,
+    };
+
+    loginUser(options).then((data) => {
+      const dataType = Object.keys(data)[0];
+      if (dataType === "error") {
+        handleError(Object.entries(data)[0][1]["data"]);
+      } else {
+        handleSuccess(Object.entries(data)[0][1]);
+      }
+    });
   };
 
   return (
